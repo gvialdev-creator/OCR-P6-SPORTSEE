@@ -1,4 +1,5 @@
 import type { DataSource } from "../../../model";
+import { LogoFull } from "../../../../../components/logos/LogoFull";
 
 type DashboardHeaderProps = {
   activeStage: "dashboard" | "profile";
@@ -19,15 +20,7 @@ export function DashboardHeader({
 }: DashboardHeaderProps) {
   return (
     <header className="mb-10 flex flex-wrap items-center justify-between gap-4 lg:mb-14">
-      <div className="flex items-end gap-2 text-primary">
-        <span className="mb-0.5 flex items-end gap-0.5" aria-hidden="true">
-          <span className="h-3 w-0.5 rounded-full bg-red-500" />
-          <span className="h-4.5 w-0.5 rounded-full bg-red-300" />
-          <span className="h-5.5 w-0.5 rounded-full bg-blue-700" />
-          <span className="h-4 w-0.5 rounded-full bg-red-400" />
-        </span>
-        <span className="text-4xl font-black uppercase tracking-tight">SportSee</span>
-      </div>
+      <LogoFull />
 
       <nav className="ds-nav">
         <ul className="ds-nav-list md:gap-4">

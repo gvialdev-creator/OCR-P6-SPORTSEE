@@ -1,3 +1,5 @@
+import { LogoPicto } from "../../../../../components/logos/LogoPicto";
+
 export function DashboardFooter() {
   return (
     <footer className="app-footer-bar mt-12 ">
@@ -10,6 +12,9 @@ export function DashboardFooter() {
                 <button type="button" className="transition hover:text-primary">
                 Contact
                 </button>
+                <div className="ml-3">
+                  <LogoPicto />
+                </div>
             </div>
         </div>
     </footer>

@@ -442,6 +442,36 @@
   .text-primary {
     color: var(--color-text);
   }
+
+  .hero-distance-content {
+    animation: hero-distance-enter 760ms ease-out;
+    animation-delay: var(--stage-fade-duration-ms, 0ms);
+    animation-fill-mode: both;
+    transform-origin: center;
+    will-change: transform, opacity;
+  }
+}
+
+@keyframes hero-distance-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) ;
+  }
+
+  58% {
+    opacity: 1;
+    transform: translateY(0) ;
+  }
+
+  78% {
+    opacity: 1;
+    transform: translateY(-3px) ;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) ;
+  }
 }
 
 @media (min-width: 768px) {

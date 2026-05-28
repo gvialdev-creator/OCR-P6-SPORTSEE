@@ -29,16 +29,7 @@ export function ProfileView({ profile, onBackToDashboard }: ProfileViewProps) {
         subtitle={profile.memberSinceLabel}
         stats={profile.statTiles}
         variant="primary"
-        columnsClassName="md:grid-cols-2"
-        action={
-          <button
-            type="button"
-            onClick={onBackToDashboard}
-            className="ds-btn app-btn-outline-primary"
-          >
-            Retour dashboard
-          </button>
-        }
+        columnsClassName="md:grid-cols-2"        
       />
     </div>
   );

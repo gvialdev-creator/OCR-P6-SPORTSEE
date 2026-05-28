@@ -11,8 +11,7 @@ type ProfileStatsSectionProps = {
   stats: StatTileData[];
   variant?: "neutral" | "primary";
   title?: string;
-  subtitle?: string;
-  action?: ReactNode;
+  subtitle?: string; 
   columnsClassName?: string;
 };
 
@@ -49,7 +48,7 @@ export function ProfileStatsSection({
             )}
             {!title && subtitle && <p className="text-base text-soft">{subtitle}</p>}
           </div>
-          {action}
+          
         </div>
       )}
 

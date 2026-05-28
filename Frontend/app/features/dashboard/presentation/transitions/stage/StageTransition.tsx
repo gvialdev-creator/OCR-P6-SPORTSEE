@@ -39,6 +39,7 @@ export function StageTransition({ stageKey, children }: StageTransitionProps) {
     <section
       key={displayedStageKey}
       style={{
+        ["--stage-fade-duration-ms" as string]: `${STAGE_FADE_DURATION_MS}ms`,
         opacity,
         transition: `opacity ${STAGE_FADE_DURATION_MS}ms ease`,
       }}

@@ -1,6 +1,6 @@
 import type { Route } from "./+types/home";
 import { Formulaire } from "../components/home/Formulaire";
-import { Logo } from "../components/home/Logo";
+import { LogoFull } from "../components/logos/LogoFull";
 import { SideImage } from "../components/home/SideImage";
 import { Slogan } from "../components/home/Slogan";
 
@@ -16,7 +16,7 @@ export default function Home() {
     <main className="home-shell">
       <div className="home-grid">
         <section className="home-left-column">
-          <Logo />
+          <LogoFull />
 
           <div className="flex flex-1 items-center justify-center">
             <div className="home-auth-card">
