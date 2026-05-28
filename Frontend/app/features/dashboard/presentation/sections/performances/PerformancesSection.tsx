@@ -1,7 +1,7 @@
-import type { DistancePoint, HeartRatePoint } from "../../model";
+import type { DistancePoint, HeartRatePoint } from "../../../model";
 import { DistanceChartCard } from "./DistanceChartCard";
 import { HeartRateChartCard } from "./HeartRateChartCard";
-import { SectionHeader } from "../components/SectionHeader";
+import { SectionHeader } from "../../components/SectionHeader";
 
 type PerformancesSectionProps = {
   averageDistanceLabel: string;
@@ -56,7 +56,7 @@ export function PerformancesSection({
     <section className="space-y-4">
       <SectionHeader
         title="Vos dernieres performances"
-        titleClassName="text-[36px] font-semibold text-gray-900"
+        titleClassName="text-[36px] font-semibold text-primary"
       />
       <div className="app-grid-two">
         <DistanceChartCard

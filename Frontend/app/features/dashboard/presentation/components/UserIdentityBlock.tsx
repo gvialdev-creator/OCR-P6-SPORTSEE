@@ -9,7 +9,7 @@ export function UserIdentityBlock({
   fullName,
   memberSinceLabel,
   profilePicture,
-  titleClassName = "text-4xl font-semibold text-gray-900",
+  titleClassName = "text-4xl font-semibold text-primary",
 }: UserIdentityBlockProps) {
   return (
     <div className="flex items-center gap-5">
@@ -20,7 +20,7 @@ export function UserIdentityBlock({
       />
       <div>
         <h1 className={titleClassName}>{fullName}</h1>
-        <p className="text-muted mt-1 text-base">{memberSinceLabel}</p>
+        <p className="text-soft mt-1 text-base">{memberSinceLabel}</p>
       </div>
     </div>
   );

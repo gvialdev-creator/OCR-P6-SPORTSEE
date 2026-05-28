@@ -16,6 +16,11 @@ type DashboardViewProps = {
   data: MockProfileData;
 };
 
+type LatestSessionsAggregated = {
+  totalActivityMinutes: number;
+  weeklyDistanceKm: number;
+};
+
 const formatMemberSince = (createdAt: string): string => {
   const date = new Date(createdAt);
   if (Number.isNaN(date.getTime())) {
@@ -42,7 +47,13 @@ export function DashboardView({ data }: DashboardViewProps) {
     a.date.localeCompare(b.date)
   );
   const visibleSessions = filterSessionsUpToDate(sortedSessions, todayIsoDate);
-  const latestSessions = visibleSessions.slice(-7);
+  const todayDate = new Date(`${todayIsoDate}T00:00:00Z`);
+  const sevenDaysAgoDate = new Date(todayDate);
+  sevenDaysAgoDate.setUTCDate(todayDate.getUTCDate() - 6);
+  const sevenDaysAgoIsoDate = sevenDaysAgoDate.toISOString().slice(0, 10);
+  const latestSessions = visibleSessions.filter(
+    (session) => session.date >= sevenDaysAgoIsoDate
+  );
 
   const availableDistanceYears = getAvailableYears(visibleSessions);
   const availableHeartYears = [...availableDistanceYears];
@@ -70,17 +81,23 @@ export function DashboardView({ data }: DashboardViewProps) {
   const avgDistancePerWeek = distancePeriodData.averageDistancePerWeek;
   const averageBpm = heartPeriodData.averageBpm;
 
-  const totalActivityMinutes = latestSessions.reduce(
-    (sum, session) => sum + session.duration,
-    0
+  const latestSessionsAggregated = latestSessions.reduce<LatestSessionsAggregated>(
+    (acc, session) => {
+      acc.totalActivityMinutes += session.duration;
+      acc.weeklyDistanceKm += session.distance;
+      return acc;
+    },
+    {
+      totalActivityMinutes: 0,
+      weeklyDistanceKm: 0,
+    } satisfies LatestSessionsAggregated
   );
-  const weeklyDistanceKm = latestSessions.reduce(
-    (sum, session) => sum + session.distance,
-    0
-  );
+  const { totalActivityMinutes, weeklyDistanceKm } = latestSessionsAggregated;
 
-  const rangeStart = latestSessions[0]?.date;
-  const rangeEnd = latestSessions[latestSessions.length - 1]?.date;
+  const rangeEnd = todayIsoDate;
+  const rangeStartDate = new Date(`${rangeEnd}T00:00:00Z`);
+  rangeStartDate.setUTCDate(rangeStartDate.getUTCDate() - 7);
+  const rangeStart = rangeStartDate.toISOString().slice(0, 10);
   const dateRangeLabel =
     rangeStart && rangeEnd
       ? `Du ${new Date(rangeStart).toLocaleDateString("fr-FR")} au ${new Date(
@@ -88,7 +105,7 @@ export function DashboardView({ data }: DashboardViewProps) {
         ).toLocaleDateString("fr-FR")}`
       : "Periode indisponible";
 
-  const weeklyGoal = Math.max(data.weeklyGoal * 3, 1);
+  const weeklyGoal = data.weeklyGoal;
 
   return (
     <div className="space-y-10">

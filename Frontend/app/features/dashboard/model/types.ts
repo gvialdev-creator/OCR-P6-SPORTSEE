@@ -40,6 +40,8 @@ export type StatTileData = {
 export type DistancePoint = {
   label: string;
   value: number;
+  weekStart: string;
+  weekEnd: string;
 };
 
 export type HeartRatePoint = {

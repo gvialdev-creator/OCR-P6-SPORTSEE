@@ -1,4 +1,4 @@
-import { IdentitySection, ProfileDetailsSection, StatsGridSection } from "../sections";
+import { IdentitySection, ProfileDetailsSection, ProfileStatsSection } from "../sections";
 import type { ProfileViewModel } from "../../model";
 
 type ProfileViewProps = {
@@ -24,7 +24,7 @@ export function ProfileView({ profile, onBackToDashboard }: ProfileViewProps) {
         />
       </div>
 
-      <StatsGridSection
+      <ProfileStatsSection
         title="Vos statistiques"
         subtitle={profile.memberSinceLabel}
         stats={profile.statTiles}

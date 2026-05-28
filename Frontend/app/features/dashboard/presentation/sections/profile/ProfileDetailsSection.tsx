@@ -1,4 +1,4 @@
-import { DashboardCard } from "../components/DashboardCard";
+import { DashboardCard } from "../../components/DashboardCard";
 
 type ProfileDetailsSectionProps = {
   age: number;
@@ -15,7 +15,7 @@ export function ProfileDetailsSection({
 }: ProfileDetailsSectionProps) {
   return (
     <DashboardCard>
-      <h2 className="text-4xl font-semibold text-gray-900">Votre profil</h2>
+      <h2 className="text-4xl font-semibold text-primary">Votre profil</h2>
       <div className="my-5 h-px bg-gray-200" />
       <div className="space-y-4 text-2xl text-gray-600">
         <p>Age : {age}</p>

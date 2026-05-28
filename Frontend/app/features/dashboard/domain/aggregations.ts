@@ -49,6 +49,8 @@ export const buildDistancePeriodData = (
           return {
             label: `S${DISTANCE_PERIOD_WEEKS - index}`,
             value: weeklySessions.reduce((sum, session) => sum + session.distance, 0),
+            weekStart: new Date(bucketStartMs).toISOString().slice(0, 10),
+            weekEnd: new Date(bucketEndMs).toISOString().slice(0, 10),
           };
         }).reverse()
       : [];

@@ -1,5 +1,5 @@
-import { DashboardCard } from "../components/DashboardCard";
-import { UserIdentityBlock } from "../components/UserIdentityBlock";
+import { DashboardCard } from "../../components/DashboardCard";
+import { UserIdentityBlock } from "../../components/UserIdentityBlock";
 
 type IdentitySectionProps = {
   fullName: string;

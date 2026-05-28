@@ -8,8 +8,8 @@ type SectionHeaderProps = {
 export function SectionHeader({
   title,
   subtitle,
-  titleClassName = "text-2xl font-semibold text-gray-900",
-  subtitleClassName = "mt-1 text-sm text-gray-500",
+  titleClassName = "text-2xl font-semibold text-primary",
+  subtitleClassName = "mt-1 text-sm text-[var(--color-text-soft)]",
 }: SectionHeaderProps) {
   return (
     <header>

@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
-import { useAuth } from "../../../../contexts/AuthContext";
-import { DashboardShell } from "../layout";
-import { DashboardView, ProfileView } from "../pages";
-import { mapProfileDataToViewModel } from "../../mappers";
+import { useAuth } from "../../../../../contexts/AuthContext";
+import { DashboardShell } from "../../layout";
+import { DashboardView, ProfileView } from "../../pages";
+import { mapProfileDataToViewModel } from "../../../mappers";
 import { StageTransition } from "./StageTransition";
-import type { DataSource, Stage } from "../../model";
-import { useProfileData } from "../../hooks/useProfileData";
+import type { DataSource, Stage } from "../../../model";
+import { useProfileData } from "../../../hooks/useProfileData";
 
 const DATA_SOURCE_KEY = "dashboardDataSource";
 

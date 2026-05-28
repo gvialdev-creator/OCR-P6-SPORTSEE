@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
-import { DashboardFooter } from "./DashboardFooter";
-import { DashboardHeader } from "./DashboardHeader";
-import type { DataSource } from "../../model";
+import { DashboardFooter } from "../chrome/DashboardFooter";
+import { DashboardHeader } from "../chrome/DashboardHeader";
+import type { DataSource } from "../../../model";
 
 type DashboardShellProps = {
   activeStage: "dashboard" | "profile";

@@ -13,9 +13,9 @@ export function MetricTile({
   if (variant === "neutral") {
     return (
       <article className="app-surface-card rounded-2xl p-6">
-        <p className="text-sm text-muted">{label}</p>
-        <p className="mt-2 text-3xl font-semibold text-gray-900">
-          {value} <span className="text-muted text-base font-medium">{unit}</span>
+        <p className="text-sm text-soft">{label}</p>
+        <p className="mt-2 text-3xl font-semibold text-primary">
+          {value} <span className="text-soft text-base font-medium">{unit}</span>
         </p>
       </article>
     );

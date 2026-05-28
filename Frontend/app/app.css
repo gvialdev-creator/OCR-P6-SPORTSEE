@@ -6,17 +6,17 @@
 }
 
 :root {
-  --color-app-bg: #eaedf7;
+  --color-app-bg: #F2F3FF;
   --color-surface: #ffffff;
   --color-surface-muted: #f7f8fc;
-  --color-text: #111827;
-  --color-text-muted: #6b7280;
-  --color-primary: #1d4fff;
+  --color-text: #111111;
+  --color-text-soft: #707070;
+  --color-primary: #0B23F4;
   --color-primary-hover: #153bd9;
   --color-primary-soft-strong: #5a70e8;
-  --color-primary-soft: #dbeafe;
-  --color-danger: #ff3a12;
-  --color-danger-soft: #f9b7aa;
+  --color-primary-soft: #B6BDFC;
+  --color-secondary: #F4320B;
+  --color-secondary-soft: #FCC1B6;
   --color-info-soft: #aab3ff;
   --color-border: #e5e7eb;
   --color-input-bg: #f9fafb;
@@ -111,7 +111,7 @@
   .form-field-label {
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--color-text-muted);
+    color: var(--color-text-soft);
   }
 
   .form-field-input {
@@ -287,7 +287,7 @@
   .ds-input-label {
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--color-text-muted);
+    color: var(--color-text-soft);
   }
 
   .ds-input {
@@ -383,7 +383,7 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.875rem;
-    color: #333;
+    color: var(--color-text);
   }
 
   .ds-chart-legend {
@@ -392,7 +392,7 @@
     flex-wrap: wrap;
     gap: 0.75rem 1.25rem;
     font-size: 0.75rem;
-    color: var(--color-text-muted);
+    color: var(--color-text-soft);
   }
 
   .ds-legend-item {
@@ -427,12 +427,20 @@
     line-height: 1;
   }
 
-  .text-muted {
-    color: var(--color-text-muted);
+  .hr-avg-line .recharts-line-curve {
+    transition: stroke 220ms ease;
+  }
+
+  .hr-avg-line-dot {
+    transition: fill 220ms ease;
+  }
+
+  .text-soft {
+    color: var(--color-text-soft);
   }
 
   .text-primary {
-    color: var(--color-primary);
+    color: var(--color-text);
   }
 }
 

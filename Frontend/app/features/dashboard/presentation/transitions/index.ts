@@ -1,2 +1,2 @@
-export * from "./DashboardStageManager";
-export * from "./StageTransition";
+export * from "./stage/DashboardStageManager";
+export * from "./stage/StageTransition";

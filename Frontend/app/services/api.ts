@@ -124,6 +124,8 @@ export const api = {
     });
   },
 
+  
+
   /**
    * Fetch user activity for a date range (requires authentication)
    */

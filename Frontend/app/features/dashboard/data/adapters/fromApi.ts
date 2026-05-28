@@ -6,6 +6,7 @@ type ApiUserInfoResponse = {
   profile: {
     firstName: string;
     lastName: string;
+    gender?: string;
     createdAt: string;
     age: number;
     weight: number;
@@ -47,19 +48,23 @@ const normalizeApiData = (
   runningData: RunningDataItem[],
   user: User | null
 ): MockProfileData => {
+  const userInfos = {
+    firstName: userInfo.profile.firstName,
+    lastName: userInfo.profile.lastName,
+    age: userInfo.profile.age,
+    gender: userInfo.profile.gender ?? "non-renseigne",
+    profilePicture: userInfo.profile.profilePicture,
+    height: userInfo.profile.height,
+    weight: userInfo.profile.weight,
+    createdAt: userInfo.profile.createdAt,
+  };
+
+  
+
   return {
     id: user ? `api-${user.userId}` : "api-user",
     weeklyGoal: 2,
-    userInfos: {
-      firstName: userInfo.profile.firstName,
-      lastName: userInfo.profile.lastName,
-      age: userInfo.profile.age,
-      gender: "non-renseigne",
-      profilePicture: userInfo.profile.profilePicture,
-      height: userInfo.profile.height,
-      weight: userInfo.profile.weight,
-      createdAt: userInfo.profile.createdAt,
-    },
+    userInfos,
     username: user?.username ?? "api-user",
     password: "",
     runningData,
@@ -70,6 +75,7 @@ export const fetchApiProfileData = async (
   user: User | null
 ): Promise<MockProfileData> => {
   const userInfo = (await api.getUserInfo()) as ApiUserInfoResponse;
+  
   const { startWeek, endWeek } = getActivityRange(userInfo.profile.createdAt);
   const userActivity = (await api.getUserActivity(
     startWeek,

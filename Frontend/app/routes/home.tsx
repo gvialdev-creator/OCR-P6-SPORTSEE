@@ -20,7 +20,7 @@ export default function Home() {
 
           <div className="flex flex-1 items-center justify-center">
             <div className="home-auth-card">
-              <h1 className="mb-6 text-5xl font-black leading-tight text-blue-700">
+              <h1 className="mb-6 text-5xl font-black leading-tight text-primary">
                 Transformez
                 <br />
                 vos stats en resultats

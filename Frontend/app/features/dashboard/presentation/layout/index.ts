@@ -1,3 +1,3 @@
-export * from "./DashboardFooter";
-export * from "./DashboardHeader";
-export * from "./DashboardShell";
+export * from "./chrome/DashboardFooter";
+export * from "./chrome/DashboardHeader";
+export * from "./shell/DashboardShell";

@@ -77,7 +77,7 @@ export function Formulaire() {
 
       <button
         type="button"
-        className="text-sm font-medium text-gray-700 transition hover:text-blue-700"
+        className="text-sm font-medium text-gray-700 transition hover:text-primary"
       >
         Mot de passe oublie ?
       </button>
