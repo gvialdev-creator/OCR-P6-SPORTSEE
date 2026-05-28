@@ -108,7 +108,7 @@ export function DashboardView({ data }: DashboardViewProps) {
   const weeklyGoal = data.weeklyGoal;
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-18">
       <DashboardHeroSection
         fullName={`${data.userInfos.firstName} ${data.userInfos.lastName}`}
         memberSinceLabel={formatMemberSince(data.userInfos.createdAt)}

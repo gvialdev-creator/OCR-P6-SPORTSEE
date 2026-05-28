@@ -15,17 +15,17 @@ export function DashboardHeroSection({
   totalDistanceLabel,
 }: DashboardHeroSectionProps) {
   return (
-    <DashboardCard className="app-surface-card flex flex-col gap-6 md:flex-row md:items-center md:justify-between md:py-4">
+    <DashboardCard className="app-surface-card bg-[linear-gradient(180deg,#ffffff_0%,var(--color-app-bg)_100%)] flex flex-col gap-6 md:flex-row md:items-center md:justify-between py-8 px-13 mb-27">
       <UserIdentityBlock
         fullName={fullName}
         memberSinceLabel={memberSinceLabel}
         profilePicture={profilePicture}
-        titleClassName="text-[40px] font-semibold leading-tight text-primary"
+        titleClassName="text-[1.375rem] font-semibold leading-tight text-primary"
       />
 
       <div className="md:text-right flex flex-wrap items-center gap-x-4.5">
         <p className="text-sm text-soft">Distance totale parcourue</p>
-        <div className="text-primary mt-2 inline-flex min-w-44 items-center justify-center rounded-xl bg-[var(--color-primary)] px-8 py-5 text-[30px] font-semibold text-white">
+        <div className="text-primary mt-2 inline-flex min-w-44 items-center justify-center rounded-xl bg-[var(--color-primary)] px-8 py-5 text-[1.375rem] font-semibold text-white">
           <span className="hero-distance-content inline-flex items-center">
             <img
               src="/images/pictos/distanceFlag.svg"

@@ -23,15 +23,15 @@ export function WeeklySection({
   const progressDegrees = Math.round(ratio * 360);
 
   return (
-    <section className="space-y-4">
+    <section className="space-y-8">
       <SectionHeader
         title="Cette semaine"
         subtitle={dateRangeLabel}
-        titleClassName="text-[36px] font-semibold text-primary"
+        titleClassName="text-[1.375rem] font-semibold text-primary"
         subtitleClassName="mt-1 text-base text-soft"
       />
 
-      <div className="grid gap-4 lg:grid-cols-[42%_58%]">
+      <div className="app-grid-two">
         <WeeklyProgressCard
           sessionsDone={sessionsDone}
           sessionsGoal={sessionsGoal}

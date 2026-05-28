@@ -8,8 +8,8 @@ type ProfileViewProps = {
 
 export function ProfileView({ profile, onBackToDashboard }: ProfileViewProps) {
   return (
-    <div className="grid gap-10 lg:grid-cols-[46%_54%]">
-      <div className="space-y-5">
+    <div className="grid gap-14 md:grid-cols-[9fr_11fr]">
+      <div className="min-w-0 space-y-5">
         <IdentitySection
           fullName={profile.fullName}
           memberSinceLabel={profile.memberSinceLabel}
@@ -24,13 +24,15 @@ export function ProfileView({ profile, onBackToDashboard }: ProfileViewProps) {
         />
       </div>
 
-      <ProfileStatsSection
-        title="Vos statistiques"
-        subtitle={profile.memberSinceLabel}
-        stats={profile.statTiles}
-        variant="primary"
-        columnsClassName="md:grid-cols-2"        
-      />
+      <div className="min-w-0">
+        <ProfileStatsSection
+          title="Vos statistiques"
+          subtitle={profile.memberSinceLabel}
+          stats={profile.statTiles}
+          variant="primary"
+          columnsClassName="md:grid-cols-2"
+        />
+      </div>
     </div>
   );
 }

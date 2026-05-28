@@ -24,7 +24,6 @@ export function ProfileStatsSection({
   variant = "primary",
   title,
   subtitle,
-  action,
   columnsClassName = "md:grid-cols-2",
 }: ProfileStatsSectionProps) {
   const totalRunningTime = getStatValue(stats, "Temps total couru");
@@ -35,15 +34,15 @@ export function ProfileStatsSection({
 
   return (
     <section>
-      {(title || subtitle || action) && (
-        <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+      {(title || subtitle) && (
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
           <div>
             {title && (
               <SectionHeader
                 title={title}
                 subtitle={subtitle}
-                titleClassName="text-5xl font-semibold text-primary"
-                subtitleClassName="mt-2 text-base text-soft"
+                titleClassName="text-[1.375rem] font-medium text-primary"
+                subtitleClassName="mt-1 text-sm text-soft"
               />
             )}
             {!title && subtitle && <p className="text-base text-soft">{subtitle}</p>}

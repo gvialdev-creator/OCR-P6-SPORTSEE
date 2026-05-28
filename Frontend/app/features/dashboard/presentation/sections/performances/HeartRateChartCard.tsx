@@ -74,11 +74,11 @@ export function HeartRateChartCard({
   }));
 
   return (
-    <DashboardCard className="app-surface-card h-full min-h-[380px] min-w-0">
+    <DashboardCard className="app-surface-card h-full min-h-[380px] min-w-0 py-6.5 px-10">
       <div className="ds-chart-header">
         <div>
-          <p className="text-3xl font-semibold text-[var(--color-secondary)]">{averageBpmLabel}</p>
-          <p className="text-sm text-soft">Frequence cardiaque moyenne</p>
+          <p className="text-[1.375rem] font-medium text-[var(--color-secondary)]">{averageBpmLabel}</p>
+          <p className="text-[0.75rem] text-soft">Frequence cardiaque moyenne</p>
         </div>
         <div className="flex flex-col items-end gap-1">
           <div className="ds-chart-range">

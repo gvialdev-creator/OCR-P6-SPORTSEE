@@ -13,7 +13,7 @@ export function IdentitySection({
   profilePicture,
 }: IdentitySectionProps) {
   return (
-    <DashboardCard>
+    <DashboardCard className="app-surface-card py-6 px-8">
       <UserIdentityBlock
         fullName={fullName}
         memberSinceLabel={memberSinceLabel}

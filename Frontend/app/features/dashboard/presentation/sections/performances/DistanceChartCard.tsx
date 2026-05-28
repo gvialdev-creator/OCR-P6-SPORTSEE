@@ -62,10 +62,10 @@ function DistanceTooltip({ active, payload }: DistanceTooltipProps) {
 
   return (
     <div className="min-w-[122px] rounded-[12px] bg-black/92 px-4 py-3 text-white shadow-[0_10px_26px_rgba(0,0,0,0.35)]">
-      <p className="text-[12px] leading-tight text-white/65">
+      <p className="text-[0.75rem] leading-tight text-white/65">
         {formatIsoDayMonth(point.weekStart)} au {formatIsoDayMonth(point.weekEnd)}
       </p>
-      <p className="mt-1 text-[33px] leading-none font-medium tracking-[-0.02em]">
+      <p className="mt-1 text-[1.25rem] leading-none font-medium tracking-[-0.02em]">
         {formatDistanceTooltipValue(point.value)}
       </p>
     </div>
@@ -96,11 +96,11 @@ export function DistanceChartCard({
   );
 
   return (
-    <DashboardCard className="app-surface-card h-full min-h-[380px] min-w-0">
+    <DashboardCard className="app-surface-card h-full min-h-[380px] min-w-0 py-6.5 px-10">
       <div className="ds-chart-header">
         <div>
-          <p className="text-3xl font-semibold text-[var(--color-primary)]">{averageDistanceLabel}</p>
-          <p className="text-sm text-soft">Total des kilometres 4 dernieres semaines</p>
+          <p className="text-[1.375rem] font-medium text-[var(--color-primary)]">{averageDistanceLabel}</p>
+          <p className="text-[0.75rem] text-soft">Total des kilometres 4 dernieres semaines</p>
         </div>
         <div className="flex flex-col items-end gap-1">
           <div className="ds-chart-range">

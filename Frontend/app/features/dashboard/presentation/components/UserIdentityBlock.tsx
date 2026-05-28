@@ -9,18 +9,20 @@ export function UserIdentityBlock({
   fullName,
   memberSinceLabel,
   profilePicture,
-  titleClassName = "text-4xl font-semibold text-primary",
+  titleClassName = "text-[1.375rem] font-medium text-primary",
 }: UserIdentityBlockProps) {
   return (
     <div className="flex items-center gap-5">
-      <img
-        src={profilePicture}
-        alt={fullName}
-        className="ds-avatar ds-avatar-lg"
-      />
+      <div className="ds-avatar ds-avatar-lg">
+        <img
+          src={profilePicture}
+          alt={fullName}
+          className="object-cover"
+        />
+      </div>
       <div>
         <h1 className={titleClassName}>{fullName}</h1>
-        <p className="text-soft mt-1 text-base">{memberSinceLabel}</p>
+        <p className="text-soft mt-1 text-sm" >{memberSinceLabel}</p>
       </div>
     </div>
   );

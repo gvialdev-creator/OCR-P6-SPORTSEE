@@ -19,7 +19,7 @@ export function DashboardHeader({
   onLogout,
 }: DashboardHeaderProps) {
   return (
-    <header className="mb-10 flex flex-wrap items-center justify-between gap-4 lg:mb-14">
+    <header className="mb-10 flex flex-wrap items-center justify-between gap-4 lg:mb-27">
       <LogoFull />
 
       <nav className="ds-nav">
@@ -33,7 +33,7 @@ export function DashboardHeader({
               Dashboard
             </button>
           </li>
-          <li className="ds-nav-divider" aria-hidden="true" />
+          
           <li>
             <button
               type="button"

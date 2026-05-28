@@ -20,13 +20,13 @@ export default function Home() {
 
           <div className="flex flex-1 items-center justify-center">
             <div className="home-auth-card">
-              <h1 className="mb-6 text-5xl font-black leading-tight text-primary">
+              <h1 className="mb-10 text-[1.75rem] font-semibold leading-tight text-[var(--color-primary)]">
                 Transformez
                 <br />
                 vos stats en resultats
               </h1>
 
-              <h2 className="mb-7 text-4xl font-semibold text-gray-800">
+              <h2 className="mb-7 text-[1.375rem] font-medium text-primary">
                 Se connecter
               </h2>
 

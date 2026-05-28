@@ -15,9 +15,9 @@ export function WeeklyProgressCard({
   progressDegrees,
 }: WeeklyProgressCardProps) {
   return (
-    <DashboardCard className="app-surface-card min-h-[250px]">
+    <DashboardCard className="app-surface-card min-h-[250px] pt-4 pb-5.5 px-9.5">
       <WeeklyProgressHeader sessionsDone={sessionsDone} sessionsGoal={sessionsGoal} />
-      <div className="relative mt-6 flex items-center justify-center">
+      <div className="relative mt-12 flex items-center justify-center">
         <WeeklyProgressRing progressDegrees={progressDegrees} />
         <WeeklyProgressLegend sessionsDone={sessionsDone} sessionsGoal={sessionsGoal} />
       </div>

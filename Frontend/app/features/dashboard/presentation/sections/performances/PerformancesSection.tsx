@@ -53,10 +53,10 @@ export function PerformancesSection({
   onShowNextHeartPeriod,
 }: PerformancesSectionProps) {
   return (
-    <section className="space-y-4">
+    <section className="space-y-8">
       <SectionHeader
         title="Vos dernieres performances"
-        titleClassName="text-[36px] font-semibold text-primary"
+        titleClassName="text-[1.375rem] font-semibold text-primary"
       />
       <div className="app-grid-two">
         <DistanceChartCard

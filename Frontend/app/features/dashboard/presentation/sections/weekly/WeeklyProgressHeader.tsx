@@ -9,7 +9,7 @@ export function WeeklyProgressHeader({
 }: WeeklyProgressHeaderProps) {
   return (
     <>
-      <p className="text-4xl font-semibold text-[var(--color-primary)] md:text-5xl">
+      <p className=" font-semibold text-[var(--color-primary)] text-[1.75rem]">
         x{sessionsDone}{" "}
         <span className="text-base font-medium text-[var(--color-primary-soft)]">
           sur objectif de {sessionsGoal}

@@ -40,7 +40,7 @@ export function Formulaire() {
       )}
 
       <div className="space-y-2">
-        <label htmlFor="email" className="ds-input-label">
+        <label htmlFor="email" className="ds-input-label inline-block mb-2">
           Adresse email
         </label>
         <input
@@ -54,7 +54,7 @@ export function Formulaire() {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="password" className="ds-input-label">
+        <label htmlFor="password" className="ds-input-label mb-2 inline-block">
           Mot de passe
         </label>
         <input
@@ -70,7 +70,7 @@ export function Formulaire() {
       <button
         type="submit"
         disabled={isLoading}
-        className="app-btn-primary ds-btn ds-btn-primary"
+        className="ds-btn ds-btn-primary"
       >
         {isLoading ? "Connexion..." : "Se connecter"}
       </button>

@@ -14,7 +14,7 @@ export function MetricTile({
     return (
       <article className="app-surface-card rounded-2xl p-6">
         <p className="text-sm text-soft">{label}</p>
-        <p className="mt-2 text-3xl font-semibold text-primary">
+        <p className="mt-4 text-[1.375rem] font-medium text-primary">
           {value} <span className="text-soft text-base font-medium">{unit}</span>
         </p>
       </article>
