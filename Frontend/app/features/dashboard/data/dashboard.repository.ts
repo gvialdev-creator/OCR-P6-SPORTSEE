@@ -5,11 +5,12 @@ import { fetchMockProfileData } from "./adapters/fromMock";
 
 export const loadDashboardData = async (
   source: DataSource,
-  user: User | null
+  user: User | null,
+  options?: { includeActivity?: boolean }
 ): Promise<MockProfileData> => {
   if (source === "mock") {
     return fetchMockProfileData();
   }
 
-  return fetchApiProfileData(user);
+  return fetchApiProfileData(user, options);
 };

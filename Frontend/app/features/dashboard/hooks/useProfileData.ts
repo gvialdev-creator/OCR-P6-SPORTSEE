@@ -11,13 +11,23 @@ type UseProfileDataResult = {
 
 export function useProfileData(
   source: DataSource,
-  user: User | null
+  user: User | null,
+  options?: { enabled?: boolean; includeActivity?: boolean }
 ): UseProfileDataResult {
+  const enabled = options?.enabled ?? true;
+  const includeActivity = options?.includeActivity ?? true;
+  const userForSource = source === "api" ? user : null;
+  const includeActivityForSource = source === "api" ? includeActivity : true;
   const [data, setData] = useState<MockProfileData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!enabled) {
+      setIsLoading(false);
+      return;
+    }
+
     let active = true;
 
     const loadData = async () => {
@@ -25,7 +35,9 @@ export function useProfileData(
       setError(null);
 
       try {
-        const normalizedData = await loadDashboardData(source, user);
+        const normalizedData = await loadDashboardData(source, userForSource, {
+          includeActivity: includeActivityForSource,
+        });
 
         if (active) {
           setData(normalizedData);
@@ -51,7 +63,7 @@ export function useProfileData(
     return () => {
       active = false;
     };
-  }, [source, user]);
+  }, [source, userForSource, enabled, includeActivityForSource]);
 
   return {
     data,

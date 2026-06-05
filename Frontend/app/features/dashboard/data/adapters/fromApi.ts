@@ -64,6 +64,11 @@ const normalizeApiData = (
   return {
     id: user ? `api-${user.userId}` : "api-user",
     weeklyGoal: 2,
+    apiStats: {
+      totalDistanceKm: Number(userInfo.statistics.totalDistance) || 0,
+      totalSessions: userInfo.statistics.totalSessions,
+      totalDurationMinutes: userInfo.statistics.totalDuration,
+    },
     userInfos,
     username: user?.username ?? "api-user",
     password: "",
@@ -72,15 +77,21 @@ const normalizeApiData = (
 };
 
 export const fetchApiProfileData = async (
-  user: User | null
+  user: User | null,
+  options?: { includeActivity?: boolean }
 ): Promise<MockProfileData> => {
+  const includeActivity = options?.includeActivity ?? true;
   const userInfo = (await api.getUserInfo()) as ApiUserInfoResponse;
-  
-  const { startWeek, endWeek } = getActivityRange(userInfo.profile.createdAt);
-  const userActivity = (await api.getUserActivity(
-    startWeek,
-    endWeek
-  )) as RunningDataItem[];
+
+  let userActivity: RunningDataItem[] = [];
+
+  if (includeActivity) {
+    const { startWeek, endWeek } = getActivityRange(userInfo.profile.createdAt);
+    userActivity = (await api.getUserActivity(
+      startWeek,
+      endWeek
+    )) as RunningDataItem[];
+  }
 
   return normalizeApiData(userInfo, userActivity, user);
 };

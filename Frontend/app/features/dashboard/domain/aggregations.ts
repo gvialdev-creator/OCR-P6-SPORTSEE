@@ -31,9 +31,15 @@ export type HeartPeriodData = {
 
 export const buildDistancePeriodData = (
   sourceSessions: RunningDataItem[],
-  periodOffset: number
+  periodOffset: number,
+  referenceEndMs?: number | null
 ): DistancePeriodData => {
-  const window = buildSlidingWindow(sourceSessions, periodOffset, DISTANCE_PERIOD_DAYS);
+  const window = buildSlidingWindow(
+    sourceSessions,
+    periodOffset,
+    DISTANCE_PERIOD_DAYS,
+    referenceEndMs
+  );
   const windowEndMs = window.endMs;
 
   const weeklyBuckets =
@@ -72,9 +78,15 @@ export const buildDistancePeriodData = (
 
 export const buildHeartPeriodData = (
   sourceSessions: RunningDataItem[],
-  periodOffset: number
+  periodOffset: number,
+  referenceEndMs?: number | null
 ): HeartPeriodData => {
-  const window = buildSlidingWindow(sourceSessions, periodOffset, HEART_PERIOD_DAYS);
+  const window = buildSlidingWindow(
+    sourceSessions,
+    periodOffset,
+    HEART_PERIOD_DAYS,
+    referenceEndMs
+  );
 
   const points: HeartRatePoint[] = window.sessions.map((session) => {
     const weekday = new Date(session.date).toLocaleDateString("fr-FR", {

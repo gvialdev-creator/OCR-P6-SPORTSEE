@@ -81,16 +81,18 @@ export const filterSessionsByYear = (
 export const buildSlidingWindow = (
   sourceSessions: RunningDataItem[],
   offset: number,
-  periodDays: number
+  periodDays: number,
+  referenceEndMs?: number | null
 ): SlidingWindowResult => {
   const latestSourceDate = sourceSessions.at(-1)?.date;
   const latestSourceDateMs = latestSourceDate
     ? parseIsoDate(latestSourceDate).getTime()
     : null;
+  const baseEndMs = referenceEndMs ?? latestSourceDateMs;
 
   const endMs =
-    latestSourceDateMs !== null
-      ? latestSourceDateMs - offset * periodDays * MS_PER_DAY
+    baseEndMs !== null && baseEndMs !== undefined
+      ? baseEndMs - offset * periodDays * MS_PER_DAY
       : null;
   const startMs =
     endMs !== null ? endMs - (periodDays - 1) * MS_PER_DAY : null;

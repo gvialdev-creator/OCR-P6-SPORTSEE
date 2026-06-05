@@ -4,6 +4,7 @@ import { LogoFull } from "../components/logos/LogoFull";
 import { SideImage } from "../components/home/SideImage";
 import { Slogan } from "../components/home/Slogan";
 
+
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "Home - SportSee" },
@@ -11,8 +12,10 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+
 export default function Home() {
   return (
+    <>
     <main className="home-shell">
       <div className="home-grid">
         <section className="home-left-column">
@@ -46,5 +49,7 @@ export default function Home() {
         <Slogan />
       </div>
     </main>
+
+    </>
   );
 }

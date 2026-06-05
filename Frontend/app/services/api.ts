@@ -1,5 +1,34 @@
 // API Configuration
 const API_BASE_URL = "http://localhost:8000";
+const USER_INFO_CACHE_TTL_MS = 30_000;
+const USER_ACTIVITY_CACHE_TTL_MS = 30_000;
+
+type UserInfoInflightRequest = {
+  token: string;
+  promise: Promise<any>;
+};
+
+type UserInfoCacheEntry = {
+  token: string;
+  data: any;
+  expiresAt: number;
+};
+
+type UserActivityInflightRequest = {
+  key: string;
+  promise: Promise<any>;
+};
+
+type UserActivityCacheEntry = {
+  key: string;
+  data: any;
+  expiresAt: number;
+};
+
+let userInfoInflightRequest: UserInfoInflightRequest | null = null;
+let userInfoCache: UserInfoCacheEntry | null = null;
+const userActivityInflightRequests = new Map<string, UserActivityInflightRequest>();
+const userActivityCache = new Map<string, UserActivityCacheEntry>();
 
 // Types
 export interface LoginResponse {
@@ -27,20 +56,30 @@ const getToken = (): string | null => {
   return localStorage.getItem("authToken");
 };
 
+const clearApiRequestCaches = (): void => {
+  userInfoInflightRequest = null;
+  userInfoCache = null;
+  userActivityInflightRequests.clear();
+  userActivityCache.clear();
+};
+
 const setToken = (token: string): void => {
   if (typeof window === "undefined") return;
   localStorage.setItem("authToken", token);
+  clearApiRequestCaches();
 };
 
 const removeToken = (): void => {
   if (typeof window === "undefined") return;
   localStorage.removeItem("authToken");
+  clearApiRequestCaches();
 };
 
 export const clearStoredAuth = (): void => {
   if (typeof window === "undefined") return;
   localStorage.removeItem("authToken");
   localStorage.removeItem("authUser");
+  clearApiRequestCaches();
 };
 
 // Generic fetch with auth
@@ -119,9 +158,50 @@ export const api = {
    * Fetch user info (requires authentication)
    */
   getUserInfo: async () => {
-    return fetchWithAuth("/api/user-info", {
+    const token = getToken();
+
+    if (!token) {
+      return fetchWithAuth("/api/user-info", {
+        method: "GET",
+      });
+    }
+
+    const now = Date.now();
+    if (
+      userInfoCache &&
+      userInfoCache.token === token &&
+      userInfoCache.expiresAt > now
+    ) {
+      return userInfoCache.data;
+    }
+
+    if (userInfoInflightRequest && userInfoInflightRequest.token === token) {
+      return userInfoInflightRequest.promise;
+    }
+
+    const requestPromise = fetchWithAuth("/api/user-info", {
       method: "GET",
-    });
+    })
+      .then((data) => {
+        userInfoCache = {
+          token,
+          data,
+          expiresAt: Date.now() + USER_INFO_CACHE_TTL_MS,
+        };
+        return data;
+      })
+      .finally(() => {
+        if (userInfoInflightRequest?.promise === requestPromise) {
+          userInfoInflightRequest = null;
+        }
+      });
+
+    userInfoInflightRequest = {
+      token,
+      promise: requestPromise,
+    };
+
+    return requestPromise;
   },
 
   
@@ -130,13 +210,45 @@ export const api = {
    * Fetch user activity for a date range (requires authentication)
    */
   getUserActivity: async (startWeek: string, endWeek: string) => {
+    const token = getToken() ?? "anonymous";
+    const key = `${token}|${startWeek}|${endWeek}`;
+    const now = Date.now();
+    const cached = userActivityCache.get(key);
+
+    if (cached && cached.expiresAt > now) {
+      return cached.data;
+    }
+
+    const inflight = userActivityInflightRequests.get(key);
+    if (inflight) {
+      return inflight.promise;
+    }
+
     const params = new URLSearchParams({
       startWeek,
       endWeek,
     });
-    return fetchWithAuth(`/api/user-activity?${params.toString()}`, {
+    const requestPromise = fetchWithAuth(`/api/user-activity?${params.toString()}`, {
       method: "GET",
+    })
+      .then((data) => {
+        userActivityCache.set(key, {
+          key,
+          data,
+          expiresAt: Date.now() + USER_ACTIVITY_CACHE_TTL_MS,
+        });
+        return data;
+      })
+      .finally(() => {
+        userActivityInflightRequests.delete(key);
+      });
+
+    userActivityInflightRequests.set(key, {
+      key,
+      promise: requestPromise,
     });
+
+    return requestPromise;
   },
 
   /**

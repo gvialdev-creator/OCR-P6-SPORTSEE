@@ -1,6 +1,6 @@
 {
 	"id": "user123",
-	"weeklyGoal": 2,
+	"weeklyGoal": 7,
 	"userInfos": {
 		"firstName": "Guillaume",
 		"lastName": "Doe",
@@ -127,22 +127,17 @@
     {"date":"2026-05-27","distance":8,"duration":52,"heartRate":{"min":139,"max":177,"average":161},"caloriesBurned":555},
     {"date":"2026-05-28","distance":6.7,"duration":43,"heartRate":{"min":141,"max":176,"average":163},"caloriesBurned":470},
     {"date":"2026-05-29","distance":5,"duration":33,"heartRate":{"min":143,"max":178,"average":165},"caloriesBurned":360},
-    {"date":"2026-05-30","distance":9.5,"duration":62,"heartRate":{"min":138,"max":179,"average":160},"caloriesBurned":660},
-    {"date":"2026-05-31","distance":7.2,"duration":46,"heartRate":{"min":140,"max":177,"average":162},"caloriesBurned":500},
+    
     
 	{"date":"2026-06-01","distance":7.4,"duration":48,"heartRate":{"min":140,"max":177,"average":162},"caloriesBurned":520},
     {"date":"2026-06-02","distance":5.3,"duration":35,"heartRate":{"min":143,"max":178,"average":165},"caloriesBurned":380},
     {"date":"2026-06-03","distance":8,"duration":52,"heartRate":{"min":139,"max":177,"average":161},"caloriesBurned":555},
     {"date":"2026-06-04","distance":6.7,"duration":43,"heartRate":{"min":141,"max":176,"average":163},"caloriesBurned":470},
     {"date":"2026-06-05","distance":5,"duration":33,"heartRate":{"min":143,"max":178,"average":165},"caloriesBurned":360},
-    {"date":"2026-06-06","distance":9.5,"duration":62,"heartRate":{"min":138,"max":179,"average":160},"caloriesBurned":660},
-    {"date":"2026-06-07","distance":7,"duration":45,"heartRate":{"min":140,"max":176,"average":162},"caloriesBurned":495},
-
+    
 	{"date":"2026-06-08","distance":4.9,"duration":32,"heartRate":{"min":143,"max":179,"average":166},"caloriesBurned":350},
     {"date":"2026-06-09","distance":7.3,"duration":47,"heartRate":{"min":140,"max":178,"average":163},"caloriesBurned":510},
-    {"date":"2026-06-10","distance":11.5,"duration":75,"heartRate":{"min":132,"max":180,"average":157},"caloriesBurned":785},
-    {"date":"2026-06-11","distance":5.6,"duration":36,"heartRate":{"min":142,"max":178,"average":164},"caloriesBurned":395},
-    {"date":"2026-06-12","distance":6.8,"duration":44,"heartRate":{"min":141,"max":177,"average":163},"caloriesBurned":475},
+    {"date":"2026-06-10","distance":11.5,"duration":75,"heartRate":{"min":132,"max":180,"average":157},"caloriesBurned":785},   
     {"date":"2026-06-13","distance":4.5,"duration":29,"heartRate":{"min":144,"max":179,"average":167},"caloriesBurned":325},
     {"date":"2026-06-14","distance":8.8,"duration":57,"heartRate":{"min":139,"max":179,"average":162},"caloriesBurned":615},
     

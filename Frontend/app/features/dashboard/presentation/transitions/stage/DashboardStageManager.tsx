@@ -12,19 +12,22 @@ const DATA_SOURCE_KEY = "dashboardDataSource";
 
 const getInitialDataSource = (): DataSource => {
   if (typeof window === "undefined") {
-    return "mock";
+    return "api";
   }
 
   const storedSource = localStorage.getItem(DATA_SOURCE_KEY);
-  return storedSource === "api" ? "api" : "mock";
+  return storedSource === "mock" ? "mock" : "api";
 };
 
 export function DashboardStageManager() {
   const navigate = useNavigate();
-  const { logout, user } = useAuth();
+  const { logout, user, isLoading: isAuthLoading } = useAuth();
   const [activeStage, setActiveStage] = useState<Stage>("dashboard");
   const [dataSource, setDataSource] = useState<DataSource>(getInitialDataSource);
-  const { data, isLoading, error } = useProfileData(dataSource, user);
+  const { data, isLoading, error } = useProfileData(dataSource, user, {
+    enabled: !isAuthLoading,
+    includeActivity: activeStage === "profile",
+  });
 
   const handleToggleDataSource = () => {
     setDataSource((prevSource) => {
@@ -39,9 +42,11 @@ export function DashboardStageManager() {
   };
 
   const profileViewModel = useMemo(() => {
-    if (!data) return null;
+    if (!data || activeStage !== "profile") return null;
     return mapProfileDataToViewModel(data);
-  }, [data]);
+  }, [activeStage, data]);
+
+  const isPageLoading = isAuthLoading || isLoading;
 
   const handleLogout = () => {
     logout();
@@ -57,7 +62,7 @@ export function DashboardStageManager() {
       onToggleDataSource={handleToggleDataSource}
       onLogout={handleLogout}
     >
-      {isLoading && (
+      {isPageLoading && (
         <div className="rounded-2xl bg-white p-6 text-gray-600 shadow-sm">
           Chargement des donnees...
         </div>
@@ -69,16 +74,16 @@ export function DashboardStageManager() {
         </div>
       )}
 
-      {!isLoading && !error && data && profileViewModel && (
+      {!isPageLoading && !error && data && (
         <StageTransition stageKey={activeStage}>
           {activeStage === "dashboard" ? (
-            <DashboardView data={data} />
-          ) : (
+            <DashboardView data={data} dataSource={dataSource} />
+          ) : profileViewModel ? (
             <ProfileView
               profile={profileViewModel}
               onBackToDashboard={() => setActiveStage("dashboard")}
             />
-          )}
+          ) : null}
         </StageTransition>
       )}
     </DashboardShell>

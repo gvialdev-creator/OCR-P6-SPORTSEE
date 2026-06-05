@@ -13,44 +13,44 @@ export function LogoPicto() {
         <rect x="3" y="14.3281" width="3" height="11" rx="1.5" transform="rotate(180 3 14.3281)" fill="url(#paint9_linear_9_86)"/>
         <defs>
         <linearGradient id="paint0_linear_9_86" x1="5.50003" y1="5.65625" x2="5.50003" y2="20.6562" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#F4320B"/>
-        <stop offset="1" stop-color="#5465F7"/>
+        <stop stopColor="#F4320B"/>
+        <stop offset="1" stopColor="#5465F7"/>
         </linearGradient>
         <linearGradient id="paint1_linear_9_86" x1="8.50003" y1="28" x2="8.50003" y2="14" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#F99885"/>
-        <stop offset="1" stop-color="#DF392B"/>
+        <stop stopColor="#F99885"/>
+        <stop offset="1" stopColor="#DF392B"/>
         </linearGradient>
         <linearGradient id="paint2_linear_9_86" x1="17.5" y1="11.3281" x2="17.5" y2="17.3281" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#F4320B"/>
-        <stop offset="1" stop-color="#5465F7"/>
+        <stop stopColor="#F4320B"/>
+        <stop offset="1" stopColor="#5465F7"/>
         </linearGradient>
         <linearGradient id="paint3_linear_9_86" x1="20.5" y1="28" x2="20.5" y2="14" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#F99885"/>
-        <stop offset="1" stop-color="#DF392B"/>
+        <stop stopColor="#F99885"/>
+        <stop offset="1" stopColor="#DF392B"/>
         </linearGradient>
         <linearGradient id="paint4_linear_9_86" x1="13.5" y1="11" x2="13.5" y2="20" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#F4320B"/>
-        <stop offset="1" stop-color="#5465F7"/>
+        <stop stopColor="#F4320B"/>
+        <stop offset="1" stopColor="#5465F7"/>
         </linearGradient>
         <linearGradient id="paint5_linear_9_86" x1="16.5" y1="23" x2="16.5" y2="14" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#F99885"/>
-        <stop offset="1" stop-color="#DF392B"/>
+        <stop stopColor="#F99885"/>
+        <stop offset="1" stopColor="#DF392B"/>
         </linearGradient>
         <linearGradient id="paint6_linear_9_86" x1="9.50003" y1="11.3281" x2="9.50003" y2="16.3281" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#F4320B"/>
-        <stop offset="1" stop-color="#5465F7"/>
+        <stop stopColor="#F4320B"/>
+        <stop offset="1" stopColor="#5465F7"/>
         </linearGradient>
         <linearGradient id="paint7_linear_9_86" x1="12.5" y1="26" x2="12.5" y2="14" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#F99885"/>
-        <stop offset="1" stop-color="#DF392B"/>
+        <stop stopColor="#F99885"/>
+        <stop offset="1" stopColor="#DF392B"/>
         </linearGradient>
         <linearGradient id="paint8_linear_9_86" x1="1.5" y1="11" x2="1.5" y2="19" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#F4320B"/>
-        <stop offset="1" stop-color="#5465F7"/>
+        <stop stopColor="#F4320B"/>
+        <stop offset="1" stopColor="#5465F7"/>
         </linearGradient>
         <linearGradient id="paint9_linear_9_86" x1="4.5" y1="25.3281" x2="4.5" y2="14.3281" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#F99885"/>
-        <stop offset="1" stop-color="#DF392B"/>
+        <stop stopColor="#F99885"/>
+        <stop offset="1" stopColor="#DF392B"/>
         </linearGradient>
         </defs>
     </svg>

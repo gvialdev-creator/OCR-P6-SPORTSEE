@@ -16,6 +16,11 @@ export type RunningDataItem = {
 export type MockProfileData = {
   id: string;
   weeklyGoal: number;
+  apiStats?: {
+    totalDistanceKm: number;
+    totalSessions: number;
+    totalDurationMinutes: number;
+  };
   userInfos: {
     firstName: string;
     lastName: string;
