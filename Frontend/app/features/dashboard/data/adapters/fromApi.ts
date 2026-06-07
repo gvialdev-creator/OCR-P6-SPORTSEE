@@ -25,9 +25,11 @@ const toIsoDate = (date: Date): string => {
 };
 
 const getActivityRange = (createdAt: string): { startWeek: string; endWeek: string } => {
+  // La plage couvre toute l'historique disponible jusqu'à aujourd'hui.
   const today = new Date();
   const createdDate = new Date(createdAt);
 
+  // Si la date de création est invalide, on retombe sur une fenêtre de secours de 3 ans.
   if (Number.isNaN(createdDate.getTime())) {
     const fallback = new Date(today);
     fallback.setFullYear(today.getFullYear() - 3);
@@ -48,6 +50,7 @@ const normalizeApiData = (
   runningData: RunningDataItem[],
   user: User | null
 ): MockProfileData => {
+  // On transforme la réponse brute de l'API en modèle interne stable pour le dashboard.
   const userInfos = {
     firstName: userInfo.profile.firstName,
     lastName: userInfo.profile.lastName,
@@ -85,6 +88,7 @@ export const fetchApiProfileData = async (
 
   let userActivity: RunningDataItem[] = [];
 
+  // L'historique d'activité est optionnel selon le contexte d'affichage.
   if (includeActivity) {
     const { startWeek, endWeek } = getActivityRange(userInfo.profile.createdAt);
     userActivity = (await api.getUserActivity(

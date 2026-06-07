@@ -1,9 +1,11 @@
+// Importation des bibliothèques nécessaires
 import { useEffect, useRef, useState } from "react";
 import type { HeartRatePoint } from "../../../model";
 import { Bar, ComposedChart, Line, Tooltip, XAxis, YAxis } from "recharts";
 import { DashboardCard } from "../../components/DashboardCard";
 import { MeasuredChartContainer } from "../../components/MeasuredChartContainer";
 
+// Définition des types pour les props du composant HeartRateChartCard
 type HeartRateChartCardProps = {
   averageBpmLabel: string;
   heartRatePoints: HeartRatePoint[];
@@ -18,6 +20,7 @@ type HeartRateChartCardProps = {
   onShowNextPeriod: () => void;
 };
 
+// Définition du composant HeartRateChartCard
 export function HeartRateChartCard({
   averageBpmLabel,
   heartRatePoints,
@@ -31,10 +34,14 @@ export function HeartRateChartCard({
   onShowPreviousPeriod,
   onShowNextPeriod,
 }: HeartRateChartCardProps) {
+  // État pour suivre le survol de la ligne moyenne
   const [isAvgLineHovered, setIsAvgLineHovered] = useState(false);
+  
+  // État et référence pour gérer l'opacité de la ligne sombre
   const [darkLineOpacity, setDarkLineOpacity] = useState(0);
   const darkLineOpacityRef = useRef(0);
 
+  // Effet secondaire pour animer l'opacité de la ligne moyenne
   useEffect(() => {
     const from = darkLineOpacityRef.current;
     const to = isAvgLineHovered ? 1 : 0;
@@ -47,6 +54,7 @@ export function HeartRateChartCard({
     const startTime = performance.now();
     let frameId = 0;
 
+    // Fonction d'animation
     const animate = (now: number) => {
       const t = Math.min((now - startTime) / durationMs, 1);
       const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
@@ -61,11 +69,13 @@ export function HeartRateChartCard({
 
     frameId = requestAnimationFrame(animate);
 
+    // Nettoyage de l'animation
     return () => {
       cancelAnimationFrame(frameId);
     };
   }, [isAvgLineHovered]);
 
+  // Mise en forme des données pour le graphique
   const chartData = heartRatePoints.map((point) => ({
     label: point.label,
     min: point.min,
@@ -73,6 +83,7 @@ export function HeartRateChartCard({
     avg: point.avg,
   }));
 
+  // Rendu du composant
   return (
     <DashboardCard className="app-surface-card h-full min-h-[380px] min-w-0 py-6.5 px-10">
       <div className="ds-chart-header">

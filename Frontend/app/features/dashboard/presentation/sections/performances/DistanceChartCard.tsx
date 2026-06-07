@@ -1,8 +1,11 @@
+// Carte graphique de la distance hebdomadaire sur une fenêtre de 4 semaines.
+// Utilise Recharts (BarChart) avec navigation par période et filtre par année.
 import type { DistancePoint } from "../../../model";
 import { Bar, BarChart, Tooltip, XAxis, YAxis } from "recharts";
 import { DashboardCard } from "../../components/DashboardCard";
 import { MeasuredChartContainer } from "../../components/MeasuredChartContainer";
 
+/** Props de la carte : points de données, labels, années disponibles et callbacks de navigation. */
 type DistanceChartCardProps = {
   averageDistanceLabel: string;
   distancePoints: DistancePoint[];
@@ -17,9 +20,14 @@ type DistanceChartCardProps = {
   onShowNextPeriod: () => void;
 };
 
+// Pas de graduation de l'axe Y (10 km) et valeur minimale de l'échelle (30 km).
 const DISTANCE_TICK_STEP = 10;
 const DISTANCE_BASE_MAX = 30;
 
+/**
+ * Formate une valeur numérique ou string en kilomètres avec virgule décimale française.
+ * Affiché dans le tooltip au survol d'une barre.
+ */
 const formatDistanceTooltipValue = (value: unknown): string => {
   if (typeof value === "number") {
     return `${value.toFixed(1).replace(".", ",")} km`;
@@ -35,6 +43,10 @@ const formatDistanceTooltipValue = (value: unknown): string => {
   return "0,0 km";
 };
 
+/**
+ * Convertit une date ISO (YYYY-MM-DD) en format court "JJ.MM"
+ * pour les étiquettes des extrémités de période dans le tooltip.
+ */
 const formatIsoDayMonth = (isoDate: string): string => {
   const parts = isoDate.split("-");
   if (parts.length !== 3) return isoDate;
@@ -42,6 +54,7 @@ const formatIsoDayMonth = (isoDate: string): string => {
   return `${day}.${month}`;
 };
 
+/** Shape du payload Recharts utilisé dans le tooltip personnalisé. */
 type DistanceTooltipProps = {
   active?: boolean;
   payload?: Array<{
@@ -50,6 +63,7 @@ type DistanceTooltipProps = {
   }>;
 };
 
+/** Tooltip personnalisé : affiche la plage "JJ.MM au JJ.MM" et la valeur en km. */
 function DistanceTooltip({ active, payload }: DistanceTooltipProps) {
   if (!active || !payload || payload.length === 0) {
     return null;
@@ -85,11 +99,13 @@ export function DistanceChartCard({
   onShowPreviousPeriod,
   onShowNextPeriod,
 }: DistanceChartCardProps) {
+  // Max observé sur les points, arrondi au tick supérieur et borné à 30 km minimum.
   const distanceMaxValue = distancePoints.reduce((max, point) => Math.max(max, point.value), 0);
   const distanceYAxisMax = Math.max(
     DISTANCE_BASE_MAX,
     Math.ceil(distanceMaxValue / DISTANCE_TICK_STEP) * DISTANCE_TICK_STEP
   );
+  // Génère les valeurs de graduation : [0, 10, 20, ..., distanceYAxisMax].
   const distanceTicks = Array.from(
     { length: distanceYAxisMax / DISTANCE_TICK_STEP + 1 },
     (_, index) => index * DISTANCE_TICK_STEP
@@ -124,6 +140,7 @@ export function DistanceChartCard({
               &#8250;
             </button>
           </div>
+          {/* Filtre par année : visible seulement si plusieurs années sont disponibles. */}
           {distanceRangeYearLabel && availableDistanceYears.length > 0 && (
             <label className="text-xs font-medium text-soft">
               <span className="mr-2">Annee</span>
@@ -148,6 +165,7 @@ export function DistanceChartCard({
         <div className="h-66 w-full min-w-0">
           <MeasuredChartContainer className="h-full w-full min-w-0">
             {({ width, height }) => (
+              // key force le remontage du graphe à chaque changement d'année ou de période.
               <BarChart
                 key={`${selectedDistanceYear ?? "all"}-${distanceRangeLabel}`}
                 width={width}

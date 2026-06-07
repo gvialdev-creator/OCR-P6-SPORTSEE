@@ -1,8 +1,9 @@
-// API Configuration
+// Configuration de base de l'API
 const API_BASE_URL = "http://localhost:8000";
-const USER_INFO_CACHE_TTL_MS = 30_000;
-const USER_ACTIVITY_CACHE_TTL_MS = 30_000;
+const USER_INFO_CACHE_TTL_MS = 30_000; // Durée de vie de la mise en cache des informations utilisateur (30 secondes)
+const USER_ACTIVITY_CACHE_TTL_MS = 30_000; // Durée de vie de la mise en cache de l'activité utilisateur (30 secondes)
 
+// Types pour les demandes et entrées de cache en cours
 type UserInfoInflightRequest = {
   token: string;
   promise: Promise<any>;
@@ -25,12 +26,13 @@ type UserActivityCacheEntry = {
   expiresAt: number;
 };
 
+// Variables de cache
 let userInfoInflightRequest: UserInfoInflightRequest | null = null;
 let userInfoCache: UserInfoCacheEntry | null = null;
 const userActivityInflightRequests = new Map<string, UserActivityInflightRequest>();
 const userActivityCache = new Map<string, UserActivityCacheEntry>();
 
-// Types
+// Types d'interfaces pour les réponses et erreurs de l'API
 export interface LoginResponse {
   token: string;
   userId: number;
@@ -40,6 +42,7 @@ export interface ErrorResponse {
   message: string;
 }
 
+// Classe d'erreur personnalisée pour les erreurs API
 export class ApiError extends Error {
   constructor(
     public status: number,
@@ -50,7 +53,7 @@ export class ApiError extends Error {
   }
 }
 
-// Token management
+// Gestion du token d'authentification
 const getToken = (): string | null => {
   if (typeof window === "undefined") return null;
   return localStorage.getItem("authToken");
@@ -82,7 +85,7 @@ export const clearStoredAuth = (): void => {
   clearApiRequestCaches();
 };
 
-// Generic fetch with auth
+// Fonction générique de requête fetch avec gestion d'authentification
 async function fetchWithAuth(
   endpoint: string,
   options: RequestInit = {}
@@ -95,7 +98,7 @@ async function fetchWithAuth(
     ...(options.headers as Record<string, string>),
   };
 
-  // Add auth token if available
+  // Ajout du token d'authentification si disponible
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
@@ -106,7 +109,7 @@ async function fetchWithAuth(
   });
 
   if (!response.ok) {
-    // If token is invalid or expired, clear persisted auth state.
+    // Si le token est invalide ou expiré, effacer l'état d'authentification persistant
     if (response.status === 401 || response.status === 403) {
       clearStoredAuth();
     }
@@ -124,11 +127,11 @@ async function fetchWithAuth(
   return response.json();
 }
 
-// API Methods
+// Méthodes de l'API
 export const api = {
   /**
-   * Login with username and password
-   * Returns token and userId
+   * Connexion avec nom d'utilisateur et mot de passe
+   * Retourne le token et l'ID utilisateur
    */
   login: async (username: string, password: string): Promise<LoginResponse> => {
     const data = await fetchWithAuth("/api/login", {
@@ -136,7 +139,7 @@ export const api = {
       body: JSON.stringify({ username, password }),
     });
     
-    // Store token locally
+    // Stocker le token localement
     if (data.token) {
       setToken(data.token);
     }
@@ -145,7 +148,7 @@ export const api = {
   },
 
   /**
-   * Logout - clear token from storage
+   * Déconnexion - effacer le token de stockage
    */
   logout: (): void => {
     removeToken();
@@ -155,7 +158,7 @@ export const api = {
   },
 
   /**
-   * Fetch user info (requires authentication)
+   * Récupération des informations utilisateur (nécessite une authentification)
    */
   getUserInfo: async () => {
     const token = getToken();
@@ -204,10 +207,8 @@ export const api = {
     return requestPromise;
   },
 
-  
-
   /**
-   * Fetch user activity for a date range (requires authentication)
+   * Récupération de l'activité utilisateur pour une période donnée (nécessite une authentification)
    */
   getUserActivity: async (startWeek: string, endWeek: string) => {
     const token = getToken() ?? "anonymous";
@@ -252,7 +253,7 @@ export const api = {
   },
 
   /**
-   * Generic GET request with auth
+   * Requête GET générique avec authentification
    */
   get: async (endpoint: string) => {
     return fetchWithAuth(endpoint, {
@@ -261,7 +262,7 @@ export const api = {
   },
 
   /**
-   * Generic POST request with auth
+   * Requête POST générique avec authentification
    */
   post: async (endpoint: string, data: any) => {
     return fetchWithAuth(endpoint, {
@@ -271,7 +272,7 @@ export const api = {
   },
 
   /**
-   * Generic PUT request with auth
+   * Requête PUT générique avec authentification
    */
   put: async (endpoint: string, data: any) => {
     return fetchWithAuth(endpoint, {
@@ -281,7 +282,7 @@ export const api = {
   },
 
   /**
-   * Generic DELETE request with auth
+   * Requête DELETE générique avec authentification
    */
   delete: async (endpoint: string) => {
     return fetchWithAuth(endpoint, {

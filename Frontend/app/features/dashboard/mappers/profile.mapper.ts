@@ -1,3 +1,5 @@
+// Transforme les données brutes du profil (mock ou API normalisée) en ViewModel
+// prêt à l'affichage dans les composants React du dashboard.
 import type { MockProfileData, ProfileViewModel } from "../model";
 import {
   filterSessionsUpToDate,
@@ -5,6 +7,10 @@ import {
   toTodayIsoDate,
 } from "../domain/period.utils";
 
+/**
+ * Formate la date d'inscription en libellé humain français.
+ * Retourne "Membre depuis date inconnue" si la date est invalide.
+ */
 const formatMemberSince = (createdAt: string): string => {
   const date = new Date(createdAt);
   if (Number.isNaN(date.getTime())) {
@@ -20,6 +26,10 @@ const formatMemberSince = (createdAt: string): string => {
   return `Membre depuis le ${formatter.format(date)}`;
 };
 
+/**
+ * Convertit un nombre de minutes en objet { value: "Xh Y", unit: "min" }
+ * pour l'affichage dans les tuiles de statistiques.
+ */
 const formatDuration = (totalMinutes: number): { value: string; unit: string } => {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
@@ -29,6 +39,7 @@ const formatDuration = (totalMinutes: number): { value: string; unit: string } =
   };
 };
 
+/** Accumulateur intermédiaire utilisé par le reduce d'agrégation des sessions. */
 type ProfileSessionsAggregated = {
   totalMinutes: number;
   totalCalories: number;
@@ -36,6 +47,11 @@ type ProfileSessionsAggregated = {
   totalSessions: number;
 };
 
+/**
+ * Calcule le nombre total de jours sans activité entre deux séances consécutives.
+ * Déduplique les dates, les trie, puis somme les écarts supérieurs à 1 jour.
+ * Retourne 0 si moins de deux séances distinctes existent.
+ */
 const calculateRestDays = (sessions: MockProfileData["runningData"]): number => {
   if (sessions.length < 2) {
     return 0;
@@ -53,14 +69,22 @@ const calculateRestDays = (sessions: MockProfileData["runningData"]): number => 
   }, 0);
 };
 
+/**
+ * Point d'entrée principal du mapper.
+ * Filtre les séances jusqu'à aujourd'hui, agrège les totaux,
+ * calcule les jours de repos, puis construit le ProfileViewModel
+ * consommé par les composants d'affichage.
+ */
 export const mapProfileDataToViewModel = (
   data: MockProfileData
 ): ProfileViewModel => {
+  // Tri chronologique puis exclusion des séances dont la date dépasse aujourd'hui.
   const sortedSessions = [...data.runningData].sort((a, b) =>
     a.date.localeCompare(b.date)
   );
   const visibleSessions = filterSessionsUpToDate(sortedSessions, toTodayIsoDate());
 
+  // Agrégation en une seule passe : durée, calories, distance et nombre de séances.
   const aggregated = visibleSessions.reduce<ProfileSessionsAggregated>(
     (acc, item) => {
       acc.totalMinutes += item.duration;

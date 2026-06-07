@@ -30,6 +30,7 @@ export function usePeriodActivityData(
 ): UsePeriodActivityDataResult {
   const [periodSessions, setPeriodSessions] = useState<RunningDataItem[] | null>(null);
 
+  // La fenêtre courante est calculée à partir des sessions visibles et de l'offset demandé.
   const rawWindow = buildSlidingWindow(
     sourceSessions,
     periodOffset,
@@ -52,6 +53,7 @@ export function usePeriodActivityData(
     let active = true;
 
     const loadPeriodSessions = async () => {
+      // En dehors de l'API, on ne charge rien ici: les données sont déjà disponibles côté appelant.
       if (dataSource !== "api" || window.startMs === null || window.endMs === null) {
         if (active) {
           setPeriodSessions(null);
@@ -59,6 +61,7 @@ export function usePeriodActivityData(
         return;
       }
 
+      // Si le fetch long a déjà chargé toutes les sessions, on filtre localement sans rappel réseau.
       if (preloadedSessions !== null && preloadedSessions !== undefined) {
         const startMs = window.startMs;
         const endMs = window.endMs;
@@ -73,18 +76,21 @@ export function usePeriodActivityData(
       }
 
       try {
+        // Fallback historique: on charge uniquement la fenêtre demandée via l'API.
         const startIso = toIsoDateFromMs(window.startMs);
         const endIso = toIsoDateFromMs(window.endMs);
         const cacheKey = `${startIso}|${endIso}`;
         const cachedResponse = activityRangeCache.get(cacheKey);
 
         if (cachedResponse) {
+          // Le cache mémoire évite de refaire un fetch pour une fenêtre déjà connue.
           if (active) {
             setPeriodSessions(cachedResponse);
           }
           return;
         }
 
+        // La promesse partagée évite de déclencher deux appels simultanés pour la même fenêtre.
         const inflight = activityRangePromiseCache.get(cacheKey);
         const requestPromise =
           inflight ??
@@ -124,6 +130,7 @@ export function usePeriodActivityData(
   }, [dataSource, window.startMs, window.endMs, preloadedSessions]);
 
   return {
+    // En mode API, les sessions affichées viennent soit du préchargement, soit du fetch dédié à la fenêtre.
     sessionsForDisplay: dataSource === "api" ? periodSessions ?? [] : sourceSessions,
     window,
   };

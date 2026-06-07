@@ -34,6 +34,7 @@ export const buildDistancePeriodData = (
   periodOffset: number,
   referenceEndMs?: number | null
 ): DistancePeriodData => {
+  // On calcule d'abord la fenêtre temporelle qui sert de base à toutes les agrégations.
   const window = buildSlidingWindow(
     sourceSessions,
     periodOffset,
@@ -42,11 +43,13 @@ export const buildDistancePeriodData = (
   );
   const windowEndMs = window.endMs;
 
+  // La distance est affichée par semaines, du plus ancien bucket au plus récent.
   const weeklyBuckets =
     window.startMs !== null && windowEndMs !== null
       ? Array.from({ length: DISTANCE_PERIOD_WEEKS }, (_, index) => {
           const bucketEndMs = windowEndMs - index * DAYS_PER_WEEK * MS_PER_DAY;
           const bucketStartMs = bucketEndMs - (DAYS_PER_WEEK - 1) * MS_PER_DAY;
+          // On garde uniquement les séances qui tombent dans la semaine courante.
           const weeklySessions = window.sessions.filter((session) => {
             const sessionDateMs = new Date(`${session.date}T00:00:00Z`).getTime();
             return sessionDateMs >= bucketStartMs && sessionDateMs <= bucketEndMs;
@@ -81,6 +84,7 @@ export const buildHeartPeriodData = (
   periodOffset: number,
   referenceEndMs?: number | null
 ): HeartPeriodData => {
+  // Même logique de fenêtre glissante, mais sur une période cardio de 7 jours.
   const window = buildSlidingWindow(
     sourceSessions,
     periodOffset,
@@ -88,6 +92,7 @@ export const buildHeartPeriodData = (
     referenceEndMs
   );
 
+  // Chaque séance devient un point de courbe avec un libellé de jour abrégé.
   const points: HeartRatePoint[] = window.sessions.map((session) => {
     const weekday = new Date(session.date).toLocaleDateString("fr-FR", {
       weekday: "short",
@@ -101,6 +106,7 @@ export const buildHeartPeriodData = (
     };
   });
 
+  // La moyenne affichée correspond à la moyenne des BPM moyens des séances visibles.
   const averageBpm =
     window.sessions.length > 0
       ? Math.round(
