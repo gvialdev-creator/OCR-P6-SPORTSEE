@@ -25,6 +25,7 @@ export function usePeriodActivityData(
   options?: {
     referenceEndMs?: number | null;
     earliestAvailableMs?: number | null;
+    preloadedSessions?: RunningDataItem[] | null;
   }
 ): UsePeriodActivityDataResult {
   const [periodSessions, setPeriodSessions] = useState<RunningDataItem[] | null>(null);
@@ -45,6 +46,8 @@ export function usePeriodActivityData(
     canShowPrevious: canShowPreviousFromBounds,
   };
 
+  const preloadedSessions = options?.preloadedSessions;
+
   useEffect(() => {
     let active = true;
 
@@ -52,6 +55,19 @@ export function usePeriodActivityData(
       if (dataSource !== "api" || window.startMs === null || window.endMs === null) {
         if (active) {
           setPeriodSessions(null);
+        }
+        return;
+      }
+
+      if (preloadedSessions !== null && preloadedSessions !== undefined) {
+        const startMs = window.startMs;
+        const endMs = window.endMs;
+        const filtered = preloadedSessions.filter((session) => {
+          const sessionMs = new Date(`${session.date}T00:00:00Z`).getTime();
+          return sessionMs >= startMs && sessionMs <= endMs;
+        });
+        if (active) {
+          setPeriodSessions(filtered);
         }
         return;
       }
@@ -105,7 +121,7 @@ export function usePeriodActivityData(
     return () => {
       active = false;
     };
-  }, [dataSource, window.startMs, window.endMs]);
+  }, [dataSource, window.startMs, window.endMs, preloadedSessions]);
 
   return {
     sessionsForDisplay: dataSource === "api" ? periodSessions ?? [] : sourceSessions,

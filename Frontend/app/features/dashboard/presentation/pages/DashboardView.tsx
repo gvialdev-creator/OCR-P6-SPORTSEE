@@ -79,6 +79,7 @@ export function DashboardView({ data, dataSource }: DashboardViewProps) {
   const [totalDistanceFromStartApi, setTotalDistanceFromStartApi] = useState<number | null>(
     null
   );
+  const [allSessionsFromStart, setAllSessionsFromStart] = useState<RunningDataItem[] | null>(null);
   const todayIsoDate = toTodayIsoDate();
 
   const sortedSessions = [...data.runningData].sort((a, b) =>
@@ -117,6 +118,7 @@ export function DashboardView({ data, dataSource }: DashboardViewProps) {
       if (dataSource !== "api") {
         if (active) {
           setTotalDistanceFromStartApi(null);
+          setAllSessionsFromStart(null);
         }
         return;
       }
@@ -125,6 +127,7 @@ export function DashboardView({ data, dataSource }: DashboardViewProps) {
       if (Number.isNaN(createdAtDate.getTime())) {
         if (active) {
           setTotalDistanceFromStartApi(data.apiStats?.totalDistanceKm ?? 0);
+          setAllSessionsFromStart(null);
         }
         return;
       }
@@ -143,10 +146,12 @@ export function DashboardView({ data, dataSource }: DashboardViewProps) {
 
         if (active) {
           setTotalDistanceFromStartApi(computedTotalDistance);
+          setAllSessionsFromStart([...sessions].sort((a, b) => a.date.localeCompare(b.date)));
         }
       } catch {
         if (active) {
           setTotalDistanceFromStartApi(data.apiStats?.totalDistanceKm ?? 0);
+          setAllSessionsFromStart(null);
         }
       }
     };
@@ -194,6 +199,7 @@ export function DashboardView({ data, dataSource }: DashboardViewProps) {
       ? {
           referenceEndMs: distanceReferenceEndMs,
           earliestAvailableMs: distanceEarliestAvailableMs,
+          preloadedSessions: allSessionsFromStart,
         }
       : undefined
   );
@@ -210,6 +216,7 @@ export function DashboardView({ data, dataSource }: DashboardViewProps) {
       ? {
           referenceEndMs: heartReferenceEndMs,
           earliestAvailableMs: heartEarliestAvailableMs,
+          preloadedSessions: allSessionsFromStart,
         }
       : undefined
   );
